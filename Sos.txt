@@ -1,0 +1,44 @@
+Sos
+import java.util.Scanner;
+public class sos {
+ static int count = 0;
+ static void findSubsets(int cs, int k, int r, int[] x, int[] w, int d) {
+ int n = w.length;
+ if (cs == d) {
+ count++;
+ System.out.print("Solution " + count + ": {");
+ for (int i = 0; i < n; i++) {
+ if (x[i] == 1) {
+ System.out.print(w[i] + " ");
+ }
+ }
+ System.out.println("}");
+ } else if (k < n) {
+ x[k] = 1;
+ if (cs + w[k] <= d) {
+ findSubsets(cs + w[k], k + 1, r - w[k], x, w, d);
+ }
+ x[k] = 0;
+ if (cs + r - w[k] >= d) {
+ findSubsets(cs, k + 1, r - w[k], x, w, d);
+ }
+ }
+ }
+ public static void main(String[] args) {
+ Scanner sc = new Scanner(System.in);
+ System.out.print("Enter the number of elements in the set: ");
+ int n = sc.nextInt();
+ int[] w = new int[n];
+ int[] x = new int[n];
+ int totalSum = 0;
+ System.out.println("Enter the elements: ");
+ for (int i = 0; i < n; i++) {
+ w[i] = sc.nextInt();
+ totalSum += w[i];
+ }
+ System.out.print("Enter the desired sum: ");
+ int d = sc.nextInt();
+ System.out.println("Total sum of elements: " + totalSum);
+ findSubsets(0, 0, totalSum, x, w, d);
+ }
+}c
